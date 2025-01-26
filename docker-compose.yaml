@@ -1,0 +1,34 @@
+services:
+  influxdb:
+    image: influxdb:latest
+    ports:
+      - '8086:8086'
+    volumes:
+      - influxdb_data:/var/lib/influxdb
+    environment:
+      - INFLUXDB_DB=test_experiment
+      - INFLUXDB_ADMIN_USER=${INFLUXDB_USERNAME}
+      - INFLUXDB_ADMIN_PASSWORD=${INFLUXDB_PASSWORD}
+  grafana:
+    image: grafana/grafana-enterprise:latest
+    restart: unless-stopped
+    container_name: grafana
+    ports:
+      - '3000:3000'
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - ./grafana-provisioning/:/etc/grafana/provisioning
+    depends_on:
+      - influxdb
+    environment:
+      - GF_DATABASE_HOST=influxdb:8086
+      - GF_DATABASE_NAME=test_experiment
+      - GF_SECURITY_ADMIN_USER=${GRAFANA_USERNAME}
+      - GF_SECURITY_ADMIN_PASSWORD=${GRAFANA_PASSWORD}
+      - GF_DATASOURCE_INFLUXDB_URL=http://influxdb:8086
+      - GF_DATASOURCE_INFLUXDB_DATABASE=test_experiment
+    links:
+     - influxdb
+volumes:
+  grafana_data: {}
+  influxdb_data: {}
