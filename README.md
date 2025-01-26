@@ -1,4 +1,4 @@
-# INFLUX DB Grafana example
+# InfluxDB Grafana example
 An example of how to setup a grafana instance, with influxDB as database and run a few types of commands.
 
 ## Preperation
@@ -67,3 +67,4 @@ Timezones are am important detail. Grafana can show local values in local time a
 
 When showing images with the `business media/Base64 plugin` it is a little hidden that settings on of the plugin must also be set corretly as describe in the [plugins documentation](https://grafana.com/grafana/plugins/volkovlabs-image-panel/)
 
+![Businessmedia plugin](https://github.com/JTvD/infl_graph_example/blob/main/grafana_show_image.png)
